@@ -11,7 +11,7 @@ spec:
 
   rules:
 
-    - host: frontend.local
+    - host: demo.cssp.localhost
 
       http:
 
