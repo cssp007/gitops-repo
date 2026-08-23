@@ -3,10 +3,11 @@ kind: Rollout
 
 metadata:
   name: frontend
+  namespace: frontend
 
 spec:
 
-  replicas: 2
+  replicas: 3
 
   revisionHistoryLimit: 3
 
@@ -24,33 +25,69 @@ spec:
 
       containers:
 
-        - name: frontend
-          image: nginx:1.28
+        - name: nginx
+
+          image: nginx:1.27
 
           ports:
+
             - name: http
               containerPort: 80
 
-          resources:
-            requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
-              cpu: 500m
-              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+
+            initialDelaySeconds: 3
+            periodSeconds: 5
 
   strategy:
+
     canary:
+
+      stableService: frontend-stable
+
+      canaryService: frontend-canary
+
+      trafficRouting:
+
+        nginx:
+          stableIngress: frontend-ingress
+
       steps:
 
-        - setWeight: 20
+        - setWeight: 10
 
         - pause:
-            duration: 2m
+            duration: 30s
+
+        - analysis:
+
+            templates:
+
+              - templateName: frontend-success-rate
+
+        - setWeight: 30
+
+        - pause:
+            duration: 30s
+
+        - analysis:
+
+            templates:
+
+              - templateName: frontend-success-rate
 
         - setWeight: 50
 
         - pause:
-            duration: 5m
+            duration: 30s
+
+        - analysis:
+
+            templates:
+
+              - templateName: frontend-success-rate
 
         - setWeight: 100

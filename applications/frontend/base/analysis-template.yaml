@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+
+metadata:
+  name: frontend-success-rate
+  namespace: frontend
+
+spec:
+
+  metrics:
+
+    - name: success-rate
+
+      interval: 10s
+
+      count: 3
+
+      failureLimit: 1
+
+      successCondition: result[0] >= 0.95
+
+      provider:
+
+        prometheus:
+
+          address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+
+          query: |
+            vector(1)
