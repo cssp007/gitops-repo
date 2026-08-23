@@ -1,0 +1,61 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+
+metadata:
+  name: frontend
+
+spec:
+
+  replicas: 1
+
+  revisionHistoryLimit: 3
+
+  selector:
+    matchLabels:
+      app: frontend
+
+  template:
+
+    metadata:
+      labels:
+        app: frontend
+
+    spec:
+
+      containers:
+
+        - name: frontend
+
+          image: nginx:1.27
+
+          ports:
+            - name: http
+              containerPort: 80
+
+          resources:
+
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+            limits:
+              cpu: 500m
+              memory: 512Mi
+
+  strategy:
+
+    canary:
+
+      steps:
+
+        - setWeight: 20
+
+        - pause:
+            duration: 2m
+
+        - setWeight: 50
+
+        - pause:
+            duration: 5m
+
+        - setWeight: 100

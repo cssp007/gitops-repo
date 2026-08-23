@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+
+metadata:
+  name: dev-project
+  namespace: argocd
+
+spec:
+
+  description: Dev environment project
+
+  sourceRepos:
+    - https://github.com/cssp007/gitops-repo.git
+
+  destinations:
+    - namespace: frontend
+      server: '*'
+
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
