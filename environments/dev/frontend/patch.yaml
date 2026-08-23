@@ -14,4 +14,4 @@ spec:
 
         - name: frontend
 
-          image: nginx:1.27
+          image: nginx:1.28
