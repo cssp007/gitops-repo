@@ -6,12 +6,4 @@ metadata:
 
 spec:
 
-  template:
-
-    spec:
-
-      containers:
-
-        - name: frontend
-
-          image: nginx:1.27
+  replicas: 5
