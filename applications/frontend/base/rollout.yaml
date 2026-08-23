@@ -25,7 +25,7 @@ spec:
       containers:
 
         - name: frontend
-          image: nginx:1.28
+          image: nginx:1.27
 
           ports:
             - name: http
@@ -46,11 +46,11 @@ spec:
         - setWeight: 20
 
         - pause:
-            duration: 2m
+            duration: 1m
 
         - setWeight: 50
 
         - pause:
-            duration: 5m
+            duration: 1m
 
         - setWeight: 100
