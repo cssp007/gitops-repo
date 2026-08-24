@@ -32,7 +32,7 @@ spec:
 
         - name: nginx
 
-          image: nginx:1.24
+          image: nginx:1.28
 
           ports:
 
@@ -65,7 +65,7 @@ spec:
         - setWeight: 10
 
         - pause:
-            duration: 30s
+            duration: 10s
 
         - analysis:
 
@@ -76,7 +76,7 @@ spec:
         - setWeight: 30
 
         - pause:
-            duration: 30s
+            duration: 10s
 
         - analysis:
 
@@ -87,7 +87,7 @@ spec:
         - setWeight: 50
 
         - pause:
-            duration: 30s
+            duration: 10s
 
         - analysis:
 
