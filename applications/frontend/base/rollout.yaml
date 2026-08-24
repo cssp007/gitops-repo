@@ -5,10 +5,10 @@ metadata:
   name: frontend
   namespace: frontend
   annotations:
-    notifications.argoproj.io/subscribe.on-rollout-completed.email: "pandey.somnath007@gmail.com"
-    notifications.argoproj.io/subscribe.on-rollout-aborted.email: "pandey.somnath007@gmail.com"
-    notifications.argoproj.io/subscribe.on-analysis-run-failed.email: "pandey.somnath007@gmail.com"
-    notifications.argoproj.io/subscribe.on-analysis-run-error.email: "pandey.somnath007@gmail.com"
+    notifications.argoproj.io/subscribe.on-rollout-completed.gmail: "pandey.somnath007@gmail.com"
+    notifications.argoproj.io/subscribe.on-rollout-aborted.gmail: "pandey.somnath007@gmail.com"
+    notifications.argoproj.io/subscribe.on-analysis-run-failed.gmail: "pandey.somnath007@gmail.com"
+    notifications.argoproj.io/subscribe.on-analysis-run-error.gmail: "pandey.somnath007@gmail.com"
 
 spec:
 
@@ -32,7 +32,7 @@ spec:
 
         - name: nginx
 
-          image: nginx:1.31
+          image: nginx:1.30
 
           ports:
 
