@@ -11,4 +11,3 @@ resources:
   - canary-service.yaml
   - ingress.yaml
   - analysis-template.yaml
-  - argo-rollouts-notification-configmap.yaml
