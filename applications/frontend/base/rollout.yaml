@@ -32,7 +32,7 @@ spec:
 
         - name: nginx
 
-          image: nginx:1.x
+          image: nginx:1.25
 
           ports:
 
