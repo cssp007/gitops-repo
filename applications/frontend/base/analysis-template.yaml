@@ -23,7 +23,7 @@ spec:
 
         prometheus:
 
-          address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+          address: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
 
           query: |
             vector(1)
