@@ -1,5 +1,6 @@
 apiVersion: v1
 kind: ConfigMap
+
 metadata:
   name: argo-rollouts-notification-configmap
   namespace: argo-rollouts
@@ -21,7 +22,7 @@ data:
 
 
   # ============================================================
-  # Rollout Completed
+  # Template: Rollout Completed
   # ============================================================
 
   template.rollout-completed-email: |
@@ -53,7 +54,7 @@ data:
 
 
   # ============================================================
-  # Analysis Failed
+  # Template: Analysis Failed
   # ============================================================
 
   template.analysis-run-failed-email: |
@@ -77,11 +78,12 @@ data:
       </p>
 
       <p>
-        The frontend-success-rate AnalysisRun failed.
+        AnalysisTemplate:
+        <b>frontend-success-rate</b>
       </p>
 
       <p>
-        Please check the AnalysisRun and Prometheus metrics.
+        The canary analysis failed.
       </p>
 
       </body>
@@ -89,7 +91,7 @@ data:
 
 
   # ============================================================
-  # Analysis Error
+  # Template: Analysis Error
   # ============================================================
 
   template.analysis-run-error-email: |
@@ -117,7 +119,8 @@ data:
       </p>
 
       <p>
-        Check Prometheus connectivity, DNS and the AnalysisTemplate.
+        Please check Prometheus connectivity, DNS and the
+        AnalysisTemplate.
       </p>
 
       </body>
@@ -125,7 +128,7 @@ data:
 
 
   # ============================================================
-  # Rollout Aborted
+  # Template: Rollout Aborted
   # ============================================================
 
   template.rollout-aborted-email: |
@@ -157,14 +160,42 @@ data:
 
 
   # ============================================================
-  # Default subscription
+  # Trigger: Rollout Completed
   # ============================================================
 
-  subscriptions: |
-    - recipients:
-        - email:pandey.somnath007@gmail.com
-      triggers:
-        - on-rollout-completed
-        - on-rollout-aborted
-        - on-analysis-run-failed
-        - on-analysis-run-error
+  trigger.on-rollout-completed: |
+    - send:
+        - rollout-completed-email
+      condition: rollout.status.phase == 'Healthy'
+
+
+  # ============================================================
+  # Trigger: Analysis Failed
+  # ============================================================
+
+  trigger.on-analysis-run-failed: |
+    - send:
+        - analysis-run-failed-email
+      condition: |
+        status.phase == 'Failed'
+
+
+  # ============================================================
+  # Trigger: Analysis Error
+  # ============================================================
+
+  trigger.on-analysis-run-error: |
+    - send:
+        - analysis-run-error-email
+      condition: |
+        status.phase == 'Error'
+
+
+  # ============================================================
+  # Trigger: Rollout Aborted
+  # ============================================================
+
+  trigger.on-rollout-aborted: |
+    - send:
+        - rollout-aborted-email
+      condition: rollout.spec.abort == true
