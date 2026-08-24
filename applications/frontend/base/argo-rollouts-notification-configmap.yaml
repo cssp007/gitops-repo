@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argo-rollouts-notification-configmap
+  namespace: frontend
+
+data:
+  service.email.gmail: |
+    username: $email-username
+    password: $email-password
+    host: smtp.gmail.com
+    port: 465
+    from: $email-username
+    html: true
+    insecure_skip_verify: false
+
+  template.analysis-run-error-email: |
+    email:
+      subject: "ERROR: AnalysisRun - {{.rollout.metadata.name}}"
+    message: |
+      <html>
+      <body>
+      <h2>Argo Rollout Analysis Error</h2>
+      <p><b>Application:</b> {{.rollout.metadata.name}}</p>
+      <p><b>Namespace:</b> {{.rollout.metadata.namespace}}</p>
+      <p>The AnalysisRun encountered an error.</p>
+      <p>Please check Prometheus connectivity, DNS and the AnalysisTemplate.</p>
+      </body>
+      </html>
+
+  template.analysis-run-failed-email: |
+    email:
+      subject: "FAILED: AnalysisRun - {{.rollout.metadata.name}}"
+    message: |
+      <html>
+      <body>
+      <h2>Argo Rollout Analysis Failed</h2>
+      <p><b>Application:</b> {{.rollout.metadata.name}}</p>
+      <p><b>Namespace:</b> {{.rollout.metadata.namespace}}</p>
+      <p>AnalysisTemplate: <b>frontend-success-rate</b></p>
+      <p>The canary analysis failed.</p>
+      </body>
+      </html>
+
+  template.rollout-aborted-email: |
+    email:
+      subject: "ABORTED: Rollout {{.rollout.metadata.name}}"
+    message: |
+      <html>
+      <body>
+      <h2>Argo Rollout Aborted</h2>
+      <p><b>Application:</b> {{.rollout.metadata.name}}</p>
+      <p><b>Namespace:</b> {{.rollout.metadata.namespace}}</p>
+      <p>The rollout was aborted before reaching 100%.</p>
+      </body>
+      </html>
+
+  template.rollout-completed-email: |
+    email:
+      subject: "SUCCESS: Rollout {{.rollout.metadata.name}} completed"
+    message: |
+      <html>
+      <body>
+      <h2>Argo Rollout Completed Successfully</h2>
+      <p><b>Application:</b> {{.rollout.metadata.name}}</p>
+      <p><b>Namespace:</b> {{.rollout.metadata.namespace}}</p>
+      <p>The canary rollout successfully reached 100% traffic.</p>
+      </body>
+      </html>
+
+  trigger.on-analysis-run-error: |
+    - send:
+        - analysis-run-error-email
+      condition: status.phase == 'Error'
+
+  trigger.on-analysis-run-failed: |
+    - send:
+        - analysis-run-failed-email
+      condition: status.phase == 'Failed'
+
+  trigger.on-rollout-aborted: |
+    - send:
+        - rollout-aborted-email
+      condition: rollout.spec.abort == true
+
+  trigger.on-rollout-completed: |
+    - send:
+        - rollout-completed-email
+      condition: rollout.status.phase == 'Healthy'
