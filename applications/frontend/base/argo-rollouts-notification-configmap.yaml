@@ -1,0 +1,170 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argo-rollouts-notification-configmap
+  namespace: argo-rollouts
+
+data:
+
+  # ============================================================
+  # Gmail SMTP
+  # ============================================================
+
+  service.email.gmail: |
+    username: $email-username
+    password: $email-password
+    host: smtp.gmail.com
+    port: 465
+    from: $email-username
+    html: true
+    insecure_skip_verify: false
+
+
+  # ============================================================
+  # Rollout Completed
+  # ============================================================
+
+  template.rollout-completed-email: |
+    email:
+      subject: "SUCCESS: Rollout {{.rollout.metadata.name}} completed"
+
+    message: |
+      <html>
+      <body>
+
+      <h2>Argo Rollout Completed Successfully</h2>
+
+      <p>
+        <b>Application:</b>
+        {{.rollout.metadata.name}}
+      </p>
+
+      <p>
+        <b>Namespace:</b>
+        {{.rollout.metadata.namespace}}
+      </p>
+
+      <p>
+        The canary rollout successfully reached 100% traffic.
+      </p>
+
+      </body>
+      </html>
+
+
+  # ============================================================
+  # Analysis Failed
+  # ============================================================
+
+  template.analysis-run-failed-email: |
+    email:
+      subject: "FAILED: AnalysisRun - {{.rollout.metadata.name}}"
+
+    message: |
+      <html>
+      <body>
+
+      <h2>Argo Rollout Analysis Failed</h2>
+
+      <p>
+        <b>Application:</b>
+        {{.rollout.metadata.name}}
+      </p>
+
+      <p>
+        <b>Namespace:</b>
+        {{.rollout.metadata.namespace}}
+      </p>
+
+      <p>
+        The frontend-success-rate AnalysisRun failed.
+      </p>
+
+      <p>
+        Please check the AnalysisRun and Prometheus metrics.
+      </p>
+
+      </body>
+      </html>
+
+
+  # ============================================================
+  # Analysis Error
+  # ============================================================
+
+  template.analysis-run-error-email: |
+    email:
+      subject: "ERROR: AnalysisRun - {{.rollout.metadata.name}}"
+
+    message: |
+      <html>
+      <body>
+
+      <h2>Argo Rollout Analysis Error</h2>
+
+      <p>
+        <b>Application:</b>
+        {{.rollout.metadata.name}}
+      </p>
+
+      <p>
+        <b>Namespace:</b>
+        {{.rollout.metadata.namespace}}
+      </p>
+
+      <p>
+        The AnalysisRun encountered an error.
+      </p>
+
+      <p>
+        Check Prometheus connectivity, DNS and the AnalysisTemplate.
+      </p>
+
+      </body>
+      </html>
+
+
+  # ============================================================
+  # Rollout Aborted
+  # ============================================================
+
+  template.rollout-aborted-email: |
+    email:
+      subject: "ABORTED: Rollout {{.rollout.metadata.name}}"
+
+    message: |
+      <html>
+      <body>
+
+      <h2>Argo Rollout Aborted</h2>
+
+      <p>
+        <b>Application:</b>
+        {{.rollout.metadata.name}}
+      </p>
+
+      <p>
+        <b>Namespace:</b>
+        {{.rollout.metadata.namespace}}
+      </p>
+
+      <p>
+        The rollout was aborted before reaching 100%.
+      </p>
+
+      </body>
+      </html>
+
+
+  # ============================================================
+  # Default subscription
+  # ============================================================
+
+  subscriptions: |
+    - recipients:
+        - email:pandey.somnath007@gmail.com
+      triggers:
+        - on-rollout-completed
+        - on-rollout-aborted
+        - on-analysis-run-failed
+        - on-analysis-run-error
