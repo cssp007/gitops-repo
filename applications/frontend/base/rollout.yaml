@@ -4,6 +4,8 @@ kind: Rollout
 metadata:
   name: frontend
   namespace: frontend
+  annotations:
+    notifications.argoproj.io/subscribe.on-sync-status.email: pandey.somnath007@gmail.com
 
 spec:
 
