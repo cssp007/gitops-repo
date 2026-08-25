@@ -35,7 +35,7 @@ spec:
 
         - name: nginx
 
-          image: docker.io/cssp007143/rag-app:sha-783b17277066e1f2bf7cd15e9831ae6fab1255be
+          image: docker.io/cssp007143/rag-app:sha-a25782528fbdc1050b0844c341652de68c45355a
 
           ports:
 
