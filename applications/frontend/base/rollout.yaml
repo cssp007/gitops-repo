@@ -32,7 +32,7 @@ spec:
 
         - name: nginx
 
-          image: nginx:1.25
+          image: docker.io/cssp007/rag-app:tag
 
           ports:
 
