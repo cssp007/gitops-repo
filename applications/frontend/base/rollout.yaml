@@ -12,7 +12,7 @@ metadata:
 
 spec:
 
-  replicas: 3
+  replicas: 2
 
   revisionHistoryLimit: 3
 
@@ -40,7 +40,7 @@ spec:
           ports:
 
             - name: http
-              containerPort: 80
+              containerPort: 5000
 
           readinessProbe:
             httpGet:
