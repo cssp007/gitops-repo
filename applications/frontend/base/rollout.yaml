@@ -27,6 +27,9 @@ spec:
         app: frontend
 
     spec:
+    
+      imagePullSecrets:
+        - name: dockerhub-secret
 
       containers:
 
