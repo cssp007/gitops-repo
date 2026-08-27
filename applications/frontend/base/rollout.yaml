@@ -35,7 +35,7 @@ spec:
 
         - name: nginx
 
-          image: docker.io/cssp007143/rag-app:sha-ae753e5f91210ff1e841841aea8fa772ebf6ec56
+          image: docker.io/cssp007143/flask-basic-app:update-tag
 
           ports:
 
