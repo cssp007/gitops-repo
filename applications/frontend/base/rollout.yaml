@@ -5,10 +5,10 @@ metadata:
   name: frontend
   namespace: frontend
   annotations:
-    notifications.argoproj.io/subscribe.on-rollout-completed.gmail: "pandey.somnath007@gmail.com"
-    notifications.argoproj.io/subscribe.on-rollout-aborted.gmail: "pandey.somnath007@gmail.com"
-    notifications.argoproj.io/subscribe.on-analysis-run-failed.gmail: "pandey.somnath007@gmail.com"
-    notifications.argoproj.io/subscribe.on-analysis-run-error.gmail: "pandey.somnath007@gmail.com"
+    notifications.argoproj.io/subscribe.on-rollout-completed.email.gmail: "pandey.somnath007@gmail.com"
+    notifications.argoproj.io/subscribe.on-rollout-aborted.email.gmail: "pandey.somnath007@gmail.com"
+    notifications.argoproj.io/subscribe.on-analysis-run-failed.email.gmail: "pandey.somnath007@gmail.com"
+    notifications.argoproj.io/subscribe.on-analysis-run-error.email.gmail: "pandey.somnath007@gmail.com"
 
 spec:
 
