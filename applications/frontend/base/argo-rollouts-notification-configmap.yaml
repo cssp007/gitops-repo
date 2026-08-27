@@ -5,6 +5,10 @@ metadata:
   namespace: frontend
 
 data:
+
+  # ============================================================
+  # Email Service
+  # ============================================================
   service.email.gmail: |
     username: $email-username
     password: $email-password
@@ -13,6 +17,10 @@ data:
     from: $email-username
     html: true
     insecure_skip_verify: false
+
+  # ============================================================
+  # Templates
+  # ============================================================
 
   template.analysis-run-error-email: |
     email:
@@ -37,7 +45,7 @@ data:
       <h2>Argo Rollout Analysis Failed</h2>
       <p><b>Application:</b> {{.rollout.metadata.name}}</p>
       <p><b>Namespace:</b> {{.rollout.metadata.namespace}}</p>
-      <p>AnalysisTemplate: <b>frontend-success-rate</b></p>
+      <p><b>AnalysisTemplate:</b> frontend-success-rate</p>
       <p>The canary analysis failed.</p>
       </body>
       </html>
@@ -67,6 +75,10 @@ data:
       <p>The canary rollout successfully reached 100% traffic.</p>
       </body>
       </html>
+
+  # ============================================================
+  # Triggers
+  # ============================================================
 
   trigger.on-analysis-run-error: |
     - send:
