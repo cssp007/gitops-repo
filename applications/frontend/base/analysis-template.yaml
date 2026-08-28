@@ -6,24 +6,36 @@ metadata:
   namespace: frontend
 
 spec:
-
   metrics:
-
     - name: success-rate
 
-      interval: 10s
-
-      count: 3
+      interval: 15s
+      count: 4
 
       failureLimit: 1
 
       successCondition: result[0] >= 0.95
 
       provider:
-
         prometheus:
-
           address: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
 
           query: |
-            vector(1)
+            sum(
+              rate(
+                flask_http_requests_total{
+                  service="frontend-canary",
+                  status=~"2..",
+                  exported_endpoint!="/metrics"
+                }[2m]
+              )
+            )
+            /
+            sum(
+              rate(
+                flask_http_requests_total{
+                  service="frontend-canary",
+                  exported_endpoint!="/metrics"
+                }[2m]
+              )
+            )
