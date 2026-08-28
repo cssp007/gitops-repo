@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: frontend-canary
+  namespace: frontend
+  labels:
+    release: prometheus
+spec:
+  namespaceSelector:
+    matchNames:
+      - frontend
+
+  selector:
+    matchLabels:
+      app: frontend
+      role: canary
+
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 10s
