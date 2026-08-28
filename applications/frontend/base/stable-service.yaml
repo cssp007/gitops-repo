@@ -4,6 +4,8 @@ kind: Service
 metadata:
   name: frontend-stable
   namespace: frontend
+  labels:
+    app: frontend
 
 spec:
 
