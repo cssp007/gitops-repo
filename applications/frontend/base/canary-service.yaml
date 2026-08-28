@@ -4,6 +4,8 @@ kind: Service
 metadata:
   name: frontend-canary
   namespace: frontend
+  labels:
+    app: frontend
 
 spec:
 
