@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: argo-rollouts-ingress
+  namespace: argo-rollouts
+
+spec:
+  ingressClassName: nginx
+  rules:
+
+    - host: demo.cssp.localhost
+      http:
+        paths:
+          - path: /rollouts-ui
+            pathType: Prefix
+            backend:
+              service:
+                name: argo-rollouts-metrics
+                port:
+                  number: 8090
