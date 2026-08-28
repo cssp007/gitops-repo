@@ -12,3 +12,4 @@ resources:
   - ingress.yaml
   - analysis-template.yaml
   - argo-rollouts-notification-configmap.yaml
+  - ServiceMonitor.yaml
