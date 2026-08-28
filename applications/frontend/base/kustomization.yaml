@@ -12,4 +12,5 @@ resources:
   - ingress.yaml
   - analysis-template.yaml
   - argo-rollouts-notification-configmap.yaml
-  - ServiceMonitor.yaml
+  - canary-service-monitor.yaml
+  - stable-service-monitor.yaml
