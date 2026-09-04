@@ -35,7 +35,7 @@ spec:
 
         - name: nginx
 
-          image: docker.io/cssp007143/flask-basic-app:sha-46139afb9aacb23c02ebf275e95460e3d3a8c49d
+          image: docker.io/cssp007143/flask-basic-app:sha-33976226e4869eaa54719ada8d4697b633124b08
 
           ports:
 
